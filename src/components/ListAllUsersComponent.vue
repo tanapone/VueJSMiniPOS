@@ -11,13 +11,13 @@
                     class="elevation-1"
             >
             <template slot="items" slot-scope="props">
-            <td>{{ props.item.id }}</td>
+            <td >{{ props.item.id }}</td>
             <td class="text-xs-left">{{ props.item.username }}</td>
             <td class="text-xs-left">{{ props.item.firstName }}</td>
             <td class="text-xs-left">{{ props.item.lastName }}</td>
             <td class="text-xs-left">{{ props.item.email }}</td>
             <td class="text-xs-left">{{ props.item.phoneNumber }}</td>
-             <td class="justify-center layout px-0">
+             <td >
             <v-icon
                 small
                 class="mr-2"
@@ -40,7 +40,12 @@
             </template>
         </v-data-table>
         </template>
-        <v-btn color="teal white--text" @click="getAllUsers()">ดึงข้อมูล</v-btn>
+        <v-layout  justify-end>
+        <v-btn color="teal white--text" @click="getAllUsers()">
+            <v-icon small class="mr-2" >refresh</v-icon>
+                โหลดข้อมูลใหม่
+            </v-btn>
+        </v-layout>
       </v-container>
     </v-content>
    </v-app>
