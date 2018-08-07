@@ -2,7 +2,7 @@
   <div id="app">
 <v-app>
   <Toolbars/>
-  <router-view/>
+    <router-view style="margin-top:5em"/>
   <AppFooter/>
 </v-app> 
   </div>

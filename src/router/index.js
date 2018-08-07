@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Authentication from '@/components/Authentication'
+import AddCategoryComponent from '@/components/AddCategoryComponent'
+import ListAllUsersComponent from '@/components/ListAllUsersComponent'
 import '../styles/main.styl'
 import VueLocalStorage from 'vue-localstorage'
 import VueRouter from 'vue-router';
@@ -8,11 +10,23 @@ import VueRouter from 'vue-router';
 Vue.use(Router)
 Vue.use(VueLocalStorage)
 
-const routes = [{
-    path: '/login',
-    component: Authentication,
-    meta: { title: 'Authentication Page' }
-}]
+const routes = [
+    {
+        path: '/login',
+        component: Authentication,
+        meta: { title: 'Authentication Page' }
+    },
+    {
+        path: '/addCategory',
+        component: AddCategoryComponent,
+        meta: { title: 'Add Category Page' }
+    },
+    {
+        path: '/users',
+        component: ListAllUsersComponent,
+        meta: { title: 'List All Users Page' }
+    }
+]
 
 const router = new VueRouter({
     mode: 'history',

@@ -8,7 +8,7 @@
     </v-toolbar-items>
     <v-toolbar-items class="hidden-sm-and-down" v-else>
       <v-btn flat>จัดการบริษัทนำเข้า</v-btn>
-      <v-btn flat>จัดการประเภทสินค้า</v-btn>
+      <v-btn flat to="/addCategory">จัดการประเภทสินค้า</v-btn>
       <v-btn flat>จัดการสินค้า</v-btn>
       <v-btn flat>รายการสินค้าคงเหลือน้อย</v-btn>
       <v-btn flat>จัดการคำสั่งซื้อสินค้า</v-btn>
