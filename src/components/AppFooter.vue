@@ -1,0 +1,37 @@
+<template>
+  <v-footer dark height="auto" absolute>
+    <v-card class="flex" flat tile>
+      <v-card-title class="teal">
+        <strong class="subheading">ระบบจัดการร้านค้า MiniPOS</strong>
+
+        <v-spacer></v-spacer>
+
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-3"
+          dark
+          icon
+        >
+          <v-icon size="24px">{{ icon }}</v-icon>
+        </v-btn>
+      </v-card-title>
+
+      <v-card-actions class="grey darken-3 justify-center">
+        &copy;2018 — &nbsp;<strong>MiniPOS</strong>
+      </v-card-actions>
+    </v-card>
+  </v-footer>
+</template>
+
+<script>
+    export default{
+        data(){
+          return{
+               icons: [
+                'fab fa-facebook'
+              ]
+          }
+        }
+    }
+</script>
