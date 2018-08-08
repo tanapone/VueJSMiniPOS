@@ -7,6 +7,7 @@
       <v-btn flat to="/login">เข้าสู่ระบบ</v-btn>
     </v-toolbar-items>
     <v-toolbar-items class="hidden-sm-and-down" v-else>
+      <v-btn flat to="/users">จัดการบัญชีผู้ใช้</v-btn>
       <v-btn flat>จัดการบริษัทนำเข้า</v-btn>
       <v-btn flat to="/addCategory">จัดการประเภทสินค้า</v-btn>
       <v-btn flat>จัดการสินค้า</v-btn>

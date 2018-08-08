@@ -71,13 +71,13 @@
                 { text: 'การจัดการ', value: 'name', sortable: false }
                 ],
                 user:[],
-                authKey:'1cb349e3-eff2-4165-b12d-0bf8c52b622d'
+                
             }
         },
         computed:{
             ...mapState([
                 'serverPath',
-                //'authKey'
+                'authKey'
             ])
         },
         methods:{
@@ -90,6 +90,9 @@
                     console.log(error)
                 })
             }
+        },
+        beforeMount(){
+            this.getAllUsers()
         }
     }
 </script>
