@@ -1,6 +1,5 @@
 <template>
     <v-toolbar color="teal" dark fixed>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title class="white--text">MiniPOS</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down" v-if="authKey=='' || authKey==null">
@@ -41,7 +40,7 @@ export default {
          logOut(){
             this.$localStorage.set('authKey','')
             this.SET_AUTHKEY(this.$localStorage.get('authKey'))    
-            router.push("login")
+            this.$router.push("login")
          }
     }
 }
