@@ -10,6 +10,7 @@
             เพิ่มบัญชีผู้ใช้
     </v-btn>
 </v-layout>
+<!-- add user dialog -->
 <template>
 <v-layout row justify-center>
 <v-dialog v-model="dialog" persistent max-width="500px">
@@ -100,6 +101,8 @@
 </v-layout>
 </template>
 
+<!-- end add user dialog -->
+
 <v-data-table
             :headers="headers"
             :items="user"
@@ -115,14 +118,15 @@
         <td class="text-xs-left">{{ props.item.phoneNumber }}</td>
         <td >
     <v-icon
-        small
+        medium
         class="mr-2"
         @click="editItem(props.item)"
     >
         edit
     </v-icon>
+        
     <v-icon
-        small
+        medium
         @click="deleteItem(props.item)"
     >
         delete
