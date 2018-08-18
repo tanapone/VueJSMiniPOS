@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Authentication from '@/components/Authentication'
 import AddCategoryComponent from '@/components/AddCategoryComponent'
-import ListAllUsersComponent from '@/components/ListAllUsersComponent'
+import UsersManagementComponent from '@/components/UsersManagementComponent'
+import CompanyManagementComponent from '@/components/CompanyManagementComponent'
 import '../styles/main.styl'
 import VueLocalStorage from 'vue-localstorage'
 import VueRouter from 'vue-router';
@@ -23,8 +24,13 @@ const routes = [
     },
     {
         path: '/users',
-        component: ListAllUsersComponent,
-        meta: { title: 'List All Users Page' }
+        component: UsersManagementComponent,
+        meta: { title: 'User Management' }
+    },
+    {
+        path: '/companies',
+        component : CompanyManagementComponent,
+        meta: {title:'Company Management'}
     }
 ]
 

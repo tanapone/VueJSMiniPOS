@@ -7,7 +7,7 @@
     </v-toolbar-items>
     <v-toolbar-items class="hidden-sm-and-down" v-else>
       <v-btn flat to="/users">{{ allMenu[0].userManagerMenu }}</v-btn>
-      <v-btn flat>{{ allMenu[0].companyManagerMenu  }}</v-btn>
+      <v-btn flat to="/companies">{{ allMenu[0].companyManagerMenu  }}</v-btn>
       <v-btn flat to="/addCategory">{{ allMenu[0].categoryManagerMenu  }}</v-btn>
       <v-btn flat>{{ allMenu[0].productManagerMenu  }}</v-btn>
       <v-btn flat>{{ allMenu[0].lowstockManagerMenu  }}</v-btn>
@@ -15,7 +15,7 @@
       <v-btn flat>{{ allMenu[0].reportManagerMenu  }}</v-btn>
       <v-btn flat @click="logOut()">{{ allMenu[0].logoutMenu  }}</v-btn>
     </v-toolbar-items>
-          <v-menu bottom left>
+          <v-menu bottom left class="hidden-md-and-up">
             <v-btn
               slot="activator"
               dark
@@ -29,7 +29,7 @@
                 <router-link to="/users" class="toolbarsMobileLink">{{ allMenu[0].userManagerMenu }}</router-link>
               </v-list-tile>
               <v-list-tile>
-                <router-link to="/" class="toolbarsMobileLink">{{ allMenu[0].companyManagerMenu}}</router-link>
+                <router-link to="/companies" class="toolbarsMobileLink">{{ allMenu[0].companyManagerMenu}}</router-link>
               </v-list-tile>
               <v-list-tile>
                 <router-link to="/addCategory" class="toolbarsMobileLink">{{ allMenu[0].categoryManagerMenu }}</router-link>
@@ -44,10 +44,10 @@
                 <router-link  to="/" class="toolbarsMobileLink">{{ allMenu[0].invoiceManagerMenu }}</router-link>
               </v-list-tile>
               <v-list-tile>
-                <router-link  to="/" class="toolbarsMobileLink">{{ allMenu[0].reportManagerMenu}}</router-link>
+                <router-link  to="/" class="toolbarsMobileLink">{{ allMenu[0].reportManagerMenu }}</router-link>
               </v-list-tile>
               <v-list-tile>
-                <button @click="logOut()" class="toolbarsMobileLink">{{ allMenu[0].logoutMenu}}</button>
+                <button @click="logOut()" class="toolbarsMobileLink">{{ allMenu[0].logoutMenu }}</button>
               </v-list-tile>
 
             </v-list>

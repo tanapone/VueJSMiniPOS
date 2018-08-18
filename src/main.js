@@ -8,7 +8,19 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
+import VuetifyConfirm from 'vuetify-confirm'
 Vue.use(Vuetify)
+
+Vue.use(VuetifyConfirm, {
+    buttonTrueText: 'ตกลง',
+    buttonFalseText: 'ยกเลิก',
+    color: 'warning',
+    icon: 'warning',
+    title: 'คำเตือน',
+    width: 300,
+    property: '$confirm'
+  })
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
