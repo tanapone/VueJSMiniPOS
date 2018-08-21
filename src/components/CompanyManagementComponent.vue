@@ -6,8 +6,8 @@
 <template>
 <v-layout  justify-end>
     <v-btn color="teal white--text" @click="dialog = true">
-        <v-icon small class="mr-2">person_add</v-icon>
-            เพิ่มบริษัทนำเข้า
+        <v-icon small class="mr-2">add_circle</v-icon>
+         เพิ่มบริษัทนำเข้า
     </v-btn>
 </v-layout>
 <!-- add user dialog -->
@@ -23,68 +23,28 @@
 <v-container grid-list-md>
     <v-layout wrap>
         <v-flex xs12>
-        <v-text-field label="ชื่อบัญชี" v-model="newUser.username" 
-        :rules="[v => !!v || 'กรุณากรอกชื่อบัญชี']"
+        <v-text-field label="ชื่อบริษัท" v-model="newCompany.companyName" 
+        :rules="[v => !!v || 'กรุณากรอกชื่อบริษัท']"
         required></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="รหัสผ่าน" type="password" v-model="newUser.password" required
-        :rules="[v => !!v || 'กรุณากรอกรหัสผ่าน']"
-        :disabled="passwordDisable"
+        <v-text-field label="เบอร์โทรศัพท์" v-model="newCompany.companyPhoneNumber" maxlength="10" required
+        :rules="[v => !!v || 'กรุณากรอกเบอร์โทรศัพท์']"
         ></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="ยืนยันรหัสผ่าน" type="password" hint="รหัสผ่านต้องตรงกัน" required
-        :rules="reEnterPasswordRules"
-        :disabled="reTypePasswordDisable"
-        ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-        <v-text-field label="ชื่อต้น" v-model="newUser.firstName" required
-        :rules="[v => !!v || 'กรุณากรอกชื่อต้น']"
-        ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-        <v-text-field label="นามสกุล" v-model="newUser.lastName" required
-        :rules="[v => !!v || 'กรุณากรอกนามสกุล']"
-        ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-        <v-text-field label="อีเมล" v-model="newUser.email" required
-        :rules="emailRules"
-        ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-        <v-text-field label="เบอร์โทร" type="tel" maxlength="10" v-model="newUser.phoneNumber" required
-        :rules="[v => !!v || 'กรุณากรอกเบอร์โทร']"
+        <v-text-field label="อีเมล ของบริษัท" v-model="newCompany.companyEmail" required
+        :rules="[v => !!v || 'กรุณากรอกอีเมล ของบริษัท']"
         ></v-text-field>
         </v-flex>
         <v-flex xs12>
         <v-textarea
             solo
-            label="ที่อยู่ปัจจุบัน"
+            label="ที่อยู่ของบริษัท"
             value=""
-            v-model="newUser.address"
-            :rules="[v => !!v || 'กรุณากรอกที่อยู่ปัจจุบัน']"
+            v-model="newCompany.companyAddress"
+            :rules="[v => !!v || 'กรุณากรอกที่อยู่ของบริษัท']"
         ></v-textarea>
-        </v-flex>
-        <v-flex xs12>
-        <v-select
-            :items="[
-            {
-                value:0,name: 'พนักงาน'
-            },
-            {
-                value:1,name: 'ผู้ดูแลระบบ'
-            }
-            ]"
-            item-text="name"
-            item-value="value"
-            label="ประเภทผู้ใช้"
-            v-model="newUser.userType"
-            :rules="[v => v!=null || 'กรุณาเลือกประเภทผู้ใช้']"
-            required
-        ></v-select>
         </v-flex>
     </v-layout>
     </v-container>
@@ -107,37 +67,35 @@
 
 <v-data-table
             :headers="headers"
-            :items="user"
+            :items="companies"
             hide-actions
             class="elevation-1"
     >
     <template slot="items" slot-scope="props">
         <td >{{ props.item.id }}</td>
-        <td class="text-xs-left">{{ props.item.username }}</td>
-        <td class="text-xs-left">{{ props.item.firstName }}</td>
-        <td class="text-xs-left">{{ props.item.lastName }}</td>
-        <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left">{{ props.item.phoneNumber }}</td>
+        <td class="text-xs-left">{{ props.item.companyName }}</td>
+        <td class="text-xs-left">{{ props.item.companyPhoneNumber }}</td>
+        <td class="text-xs-left">{{ props.item.companyEmail }}</td>
         <td >
-    <v-icon
-        medium
-        class="mr-2"
-        @click="editItem(props.item)"
-    >
-        edit
-    </v-icon>
-        
-    <v-icon
-        medium
-        @click="cfmDelete(props.item)"
-    >
-        delete
-    </v-icon>
+            <v-icon
+                medium
+                class="mr-2"
+                @click="editItem(props.item)"
+            >
+                edit
+            </v-icon>
+                
+            <v-icon
+                medium
+                @click="cfmDelete(props.item)"
+            >
+                delete
+            </v-icon>
     </td>
     </template>
     <template slot="no-data">
     <v-alert :value="true" color="error" icon="warning">
-        ไม่พบข้อมูลผู้ใช้งาน
+        ไม่พบข้อมูลบริษัทนำเข้า
     </v-alert>
     </template>
 </v-data-table>
@@ -159,66 +117,51 @@ export default {
 data() {
 return {
 errMsg:'',
-passwordDisable:false,
-reTypePasswordDisable:false,
 editedIndex:-1,
 emailRules:[
     v => !!v || 'กรุณากรอกอีเมล',
     v => /.+@.+/.test(v) || 'รูปแบบอีเมลไม่ถูกต้อง'
     ],
-reEnterPasswordRules:[
-        v => !!v || 'กรุณายืนยันรหัสผ่าน',
-        v => v==this.newUser.password || 'รหัสผ่านไม่ตรงกัน'
-        
-],
-disableReTypeRules:[]
-,
 valid: true,
 dialog: false,
 headers: [
 {
-    text: "หมายเลขบัญชี",
+    text: "หมายเลขบริษัทนำเข้า",
     align: "left",
     sortable: false,
     value: "id"
 },
-{ text: "ชื่อบัญชี", value: "username" },
-{ text: "ชื่อ", value: "firstName" },
-{ text: "นามสกุล", value: "lastName" },
-{ text: "อีเมล์", value: "email" },
-{ text: "เบอร์โทร", value: "phoneNumber" },
+{ text: "ชื่อบริษัทนำเข้า", value: "companyName" },
+{ text: "เบอร์โทรศัพท์", value: "companyPhoneNumber" },
+{ text: "อีเมล", value: "companyEmail"},
 { text: "การจัดการ", value: "name", sortable: false }
 ],
-newUser: [
+newCompany: [
 {
-    username: '',
-    password: '',
-    userType:0,
-    firstName: '',
-    lastName: '',
-    email:'',
-    phoneNumber:'',
-    address:''
+    companyName:'',
+    companyPhoneNumber:'',
+    companyEmail:'',
+    companyAddress:''
 }
 ],
-user: []
+companies: []
 };
 },
 computed: {
 ...mapState(["serverPath", "authKey"]),
     formTitle () {
-        return this.editedIndex === -1 ? 'สร้างบัญชีใหม่' : 'แก้ไขบัญชี'
+        return this.editedIndex === -1 ? 'เพิ่มบริษัทนำข้าใหม่' : 'แก้ไขบริษัทนำเข้า'
     }
 
 },
 methods: {
 getAllUsers() {
 axios
-.get(this.serverPath + "users?authKey=" + this.authKey)
+.get(this.serverPath + "companies?authKey=" + this.authKey)
 .then(response => {
-    this.user = response.data;
-    console.log(this.serverPath + "users?authKey=" + this.authKey);
-    console.log(this.user);
+    this.companies = response.data;
+    console.log(this.serverPath + "companies?authKey=" + this.authKey);
+    console.log(this.companies);
 })
 .catch(error => {
     console.log(error);
@@ -228,20 +171,14 @@ save() {
 if (this.$refs.form.validate()) {
     // editedIndex คือตำแหน่งที่เลือก item index ตอนนี้ใช้ตรวจสอบว่า ถ้า -1 คือสร้างข้อมูลใหม่ แต่ถ้าไม่ใช่คือการแก้ไข
     if(this.editedIndex==-1){
-        axios.post(this.serverPath+'create/user?authKey='+this.authKey,{
-            username: this.newUser.username,
-            password: this.newUser.password,
-            userType: this.newUser.userType,
-            firstName: this.newUser.firstName,
-            lastName: this.newUser.lastName,
-            email: this.newUser.email,
-            phoneNumber: this.newUser.phoneNumber,
-            address: this.newUser.address
+        axios.post(this.serverPath+'create/company?authKey='+this.authKey,{
+            companyName: this.newCompany.companyName,
+            companyPhoneNumber: this.newCompany.companyPhoneNumber,
+            companyEmail: this.newCompany.companyEmail,
+            companyAddress: this.newCompany.companyAddress,
         }).then(response =>{
-            if(response.data.message=='Please change username.'){
-                this.errMsg = 'บัญชีนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบัญชี'
-            }else if(response.data.message=='Please change email.'){
-                this.errMsg = 'มีบัญชีที่ใช้อีเมลนี้อยู่ กรุณาเปลี่ยนอีเมล'
+            if(response.data.message=='Please change company name.'){
+                this.errMsg = 'บริษัทนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบริษัท'
             }else{
                 this.resetForm()
                 this.getAllUsers()
@@ -250,25 +187,18 @@ if (this.$refs.form.validate()) {
             console.log(error)
         })
     }else{
-        axios.post(this.serverPath+'update/user?authKey='+this.authKey,{
-            id : this.user[this.editedIndex].id,
-            username: this.newUser.username,
-            password: this.newUser.password,
-            userType: this.newUser.userType,
-            firstName: this.newUser.firstName,
-            lastName: this.newUser.lastName,
-            email: this.newUser.email,
-            phoneNumber: this.newUser.phoneNumber,
-            address: this.newUser.address,
-            authKey:this.user[this.editedIndex].authKey
+        axios.post(this.serverPath+'update/company?authKey='+this.authKey,{
+            id : this.companies[this.editedIndex].id,
+            companyName: this.newCompany.companyName,
+            companyPhoneNumber: this.newCompany.companyPhoneNumber,
+            companyEmail: this.newCompany.companyEmail,
+            companyAddress: this.newCompany.companyAddress,
         }).then(response =>{
-            if(response.data.message=='no user detail.'){
-                this.errMsg = 'ไม่พบข้อมูลของผู้ใช้'
+            if(response.data.message=='no company detail.'){
+                this.errMsg = 'ไม่พบข้อมูลของบริษัท'
             }else{
-                if(response.data.message=='Please change username.'){
-                    this.errMsg = 'บัญชีนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบัญชี'
-                }else if(response.data.message=='Please change email.'){
-                    this.errMsg = 'มีบัญชีที่ใช้อีเมลนี้อยู่ กรุณาเปลี่ยนอีเมล'
+                if(response.data.message=='Please change company name.'){
+                    this.errMsg = 'บริษัทนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบริษัท'
                 }else{
                     this.resetForm()
                     this.getAllUsers()
@@ -284,28 +214,26 @@ resetForm(){
     this.$refs.form.reset()
     this.errMsg = ''
     this.dialog = false
-    this.reTypePasswordDisable = false
-    this.passwordDisable = false
+
     this.editedIndex = -1
 },
 editItem(item) {
-        this.editedIndex = this.user.indexOf(item)
-        this.newUser = Object.assign({}, item)
-        this.reEnterPasswordRules = Object.assign([],this.disableReTypeRules)
-        this.reTypePasswordDisable = true
-        this.passwordDisable = true
+        this.editedIndex = this.companies.indexOf(item)
+        this.newCompany = Object.assign({}, item)
         this.dialog = true
 },
 async cfmDelete(item){
-    let username = this.user[this.user.indexOf(item)].username
-    let res = await this.$confirm('คุณต้องการลบบัญชี '+ username + '?', {title: 'คำเตือน'})
+    let companyName = this.companies[this.companies.indexOf(item)].companyName
+    let res = await this.$confirm('คุณต้องการลบบริษัท '+ companyName + '?', {title: 'คำเตือน'})
     if(res){
-        this.deleteItem(this.user[this.user.indexOf(item)])
+        this.deleteItem(this.companies[this.companies.indexOf(item)])
     }
 },
 deleteItem(item){
-    axios.delete(this.serverPath+'delete/user/'+item.id+'?authKey='+this.authKey).then(response=>{
+    axios.delete(this.serverPath+'delete/company/'+item.id+'?authKey='+this.authKey).then(response=>{
         this.getAllUsers();
+    }).catch(error=>{
+        console.log(error)
     })
 }
 },
