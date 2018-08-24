@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Authentication from '@/components/Authentication'
-import AddCategoryComponent from '@/components/AddCategoryComponent'
+import CategoryManagementComponent from '@/components/CategoryManagementComponent'
 import UsersManagementComponent from '@/components/UsersManagementComponent'
 import CompanyManagementComponent from '@/components/CompanyManagementComponent'
 import '../styles/main.styl'
@@ -19,18 +19,18 @@ const routes = [
     },
     {
         path: '/addCategory',
-        component: AddCategoryComponent,
-        meta: { title: 'Add Category Page' }
+        component: CategoryManagementComponent,
+        meta: { title: 'Category Management Page' }
     },
     {
         path: '/users',
         component: UsersManagementComponent,
-        meta: { title: 'User Management' }
+        meta: { title: 'User Management Page' }
     },
     {
         path: '/companies',
         component : CompanyManagementComponent,
-        meta: {title:'Company Management'}
+        meta: {title:'Company Management Page'}
     }
 ]
 

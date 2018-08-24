@@ -101,7 +101,7 @@
 </v-data-table>
 </template>
 <v-layout  justify-end>
-    <v-btn color="teal white--text" @click="getAllUsers()">
+    <v-btn color="teal white--text" @click="getAllCompanies()">
         <v-icon small class="mr-2" >refresh</v-icon>
             โหลดข้อมูลใหม่
     </v-btn>
@@ -155,7 +155,7 @@ computed: {
 
 },
 methods: {
-getAllUsers() {
+getAllCompanies() {
 axios
 .get(this.serverPath + "companies?authKey=" + this.authKey)
 .then(response => {
@@ -181,7 +181,7 @@ if (this.$refs.form.validate()) {
                 this.errMsg = 'บริษัทนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบริษัท'
             }else{
                 this.resetForm()
-                this.getAllUsers()
+                this.getAllCompanies()
             }
         }).catch(error=>{
             console.log(error)
@@ -201,7 +201,7 @@ if (this.$refs.form.validate()) {
                     this.errMsg = 'บริษัทนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบริษัท'
                 }else{
                     this.resetForm()
-                    this.getAllUsers()
+                    this.getAllCompanies()
                 }
             }
         }).catch(error=>{
@@ -231,14 +231,14 @@ async cfmDelete(item){
 },
 deleteItem(item){
     axios.delete(this.serverPath+'delete/company/'+item.id+'?authKey='+this.authKey).then(response=>{
-        this.getAllUsers();
+        this.getAllCompanies();
     }).catch(error=>{
         console.log(error)
     })
 }
 },
 beforeMount() {
-    this.getAllUsers();
+    this.getAllCompanies();
 }
 };
 </script>

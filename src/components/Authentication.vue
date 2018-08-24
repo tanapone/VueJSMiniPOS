@@ -29,7 +29,7 @@
                 <v-alert v-model="errorFound" dismissible type="error" style="margin-top:1em">
                 {{ errorMsg }}
                 </v-alert>
-                key : {{authKey}}
+                <!-- key : {{authKey}} -->
             </div>
           </v-flex>
         </v-layout>
