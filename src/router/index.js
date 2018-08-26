@@ -4,6 +4,7 @@ import Authentication from '@/components/Authentication'
 import CategoryManagementComponent from '@/components/CategoryManagementComponent'
 import UsersManagementComponent from '@/components/UsersManagementComponent'
 import CompanyManagementComponent from '@/components/CompanyManagementComponent'
+import ProductManagementComponent from '@/components/ProductManagementComponent'
 import '../styles/main.styl'
 import VueLocalStorage from 'vue-localstorage'
 import VueRouter from 'vue-router';
@@ -11,8 +12,7 @@ import VueRouter from 'vue-router';
 Vue.use(Router)
 Vue.use(VueLocalStorage)
 
-const routes = [
-    {
+const routes = [{
         path: '/login',
         component: Authentication,
         meta: { title: 'Authentication Page' }
@@ -29,8 +29,13 @@ const routes = [
     },
     {
         path: '/companies',
-        component : CompanyManagementComponent,
-        meta: {title:'Company Management Page'}
+        component: CompanyManagementComponent,
+        meta: { title: 'Company Management Page' }
+    },
+    {
+        path: '/products',
+        component: ProductManagementComponent,
+        meta: { title: 'Product Management Page' }
     }
 ]
 

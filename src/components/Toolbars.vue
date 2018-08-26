@@ -9,7 +9,7 @@
       <v-btn flat to="/users">{{ allMenu[0].userManagerMenu }}</v-btn>
       <v-btn flat to="/companies">{{ allMenu[0].companyManagerMenu  }}</v-btn>
       <v-btn flat to="/addCategory">{{ allMenu[0].categoryManagerMenu  }}</v-btn>
-      <v-btn flat>{{ allMenu[0].productManagerMenu  }}</v-btn>
+      <v-btn flat to="/products">{{ allMenu[0].productManagerMenu  }}</v-btn>
       <v-btn flat>{{ allMenu[0].lowstockManagerMenu  }}</v-btn>
       <v-btn flat>{{ allMenu[0].invoiceManagerMenu  }}</v-btn>
       <v-btn flat>{{ allMenu[0].reportManagerMenu  }}</v-btn>
@@ -35,7 +35,7 @@
                 <router-link to="/addCategory" class="toolbarsMobileLink">{{ allMenu[0].categoryManagerMenu }}</router-link>
               </v-list-tile>
               <v-list-tile>
-                <router-link  to="/" class="toolbarsMobileLink">{{ allMenu[0].productManagerMenu }}</router-link>
+                <router-link  to="/products" class="toolbarsMobileLink">{{ allMenu[0].productManagerMenu }}</router-link>
               </v-list-tile>
               <v-list-tile>
                 <router-link  to="/" class="toolbarsMobileLink">{{ allMenu[0].lowstockManagerMenu }}</router-link>

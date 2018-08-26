@@ -4,7 +4,7 @@ import Vue from 'vue';
 Vue.use(Vuex)
 
 const state = {
-    serverPath: 'http://192.168.1.36:8080/services/',
+    serverPath: 'http://192.168.1.8:8080/services/',
     authKey: '',
     nowComponent: ''
 }

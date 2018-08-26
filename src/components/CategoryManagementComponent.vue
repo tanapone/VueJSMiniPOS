@@ -80,7 +80,7 @@
 </v-data-table>
 </template>
 <v-layout  justify-end>
-    <v-btn color="teal white--text" @click="getAllUsers()">
+    <v-btn color="teal white--text" @click="getAllCategories()">
         <v-icon small class="mr-2" >refresh</v-icon>
             โหลดข้อมูลใหม่
     </v-btn>

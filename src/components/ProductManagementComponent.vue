@@ -2,11 +2,11 @@
 <v-app>
 <v-content>
 <v-container fluid >
-<h1>บัญชีผู้ใช้ทั้งหมด</h1>
+<h1>สินค้าทั้งหมด</h1>
 <template>
 <v-layout  justify-end>
     <v-btn color="teal white--text" @click="dialog = true">
-        <v-icon small class="mr-2">person_add</v-icon>
+        <v-icon small class="mr-2">add_shopping_cart</v-icon>
             เพิ่มบัญชีผู้ใช้
     </v-btn>
 </v-layout>
@@ -23,68 +23,48 @@
 <v-container grid-list-md>
     <v-layout wrap>
         <v-flex xs12>
-        <v-text-field label="ชื่อบัญชี" v-model="newUser.username" 
-        :rules="[v => !!v || 'กรุณากรอกชื่อบัญชี']"
+        <v-text-field label="ชื่อสินค้า" v-model="newProduct.productName" 
+        :rules="[v => !!v || 'กรุณากรอกชื่อสินค้า']"
         required></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="รหัสผ่าน" type="password" v-model="newUser.password" required
-        :rules="[v => !!v || 'กรุณากรอกรหัสผ่าน']"
-        :disabled="passwordDisable"
+        <v-text-field label="รหัสบาร์โค้ดสินค้า" v-model="newProduct.productBarcodeID" 
+        required
+        :rules="[v => !!v || 'กรุณากรอกรหัสบาร์โค้ดสินค้า']"
         ></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="ยืนยันรหัสผ่าน" type="password" hint="รหัสผ่านต้องตรงกัน" required
-        :rules="reEnterPasswordRules"
-        :disabled="reTypePasswordDisable"
+        <v-text-field label="ราคาทุนสินค้า" v-model="newProduct.productCapitalPrice"
+         style="appearance: none;"
+         type="number"
+       
+        required
+        :rules="[v => !!v || 'กรุณากรอกราคาทุนสินค้า']"
         ></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="ชื่อต้น" v-model="newUser.firstName" required
-        :rules="[v => !!v || 'กรุณากรอกชื่อต้น']"
+        <v-text-field label="ราคาขายสินค้า" v-model="newProduct.productSalePrice" 
+        type="number"
+        style="appearance: none;"
+        required
+        :rules="[v => !!v || 'กรุณากรอกราคาขายสินค้า']"
         ></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="นามสกุล" v-model="newUser.lastName" required
-        :rules="[v => !!v || 'กรุณากรอกนามสกุล']"
+        <v-text-field label="จำนวนสินค้าขั้นต่ำ" v-model="newProduct.productMinimum" 
+        type="number"
+        style="appearance: none;"
+        required
+        :rules="[v => !!v || 'กรุณากรอกจำนวนสินค้าขั้นต่ำ']"
         ></v-text-field>
         </v-flex>
         <v-flex xs12>
-        <v-text-field label="อีเมล" v-model="newUser.email" required
-        :rules="emailRules"
+        <v-text-field label="จำนวนสินค้า" v-model="newProduct.productQty" 
+        type="number"
+        style="appearance: none;"
+        required
+        :rules="[v => !!v || 'กรุณากรอกจำนวนสินค้า']"
         ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-        <v-text-field label="เบอร์โทร" type="tel" maxlength="10" v-model="newUser.phoneNumber" required
-        :rules="[v => !!v || 'กรุณากรอกเบอร์โทร']"
-        ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
-        <v-textarea
-            solo
-            label="ที่อยู่ปัจจุบัน"
-            value=""
-            v-model="newUser.address"
-            :rules="[v => !!v || 'กรุณากรอกที่อยู่ปัจจุบัน']"
-        ></v-textarea>
-        </v-flex>
-        <v-flex xs12>
-        <v-select
-            :items="[
-            {
-                value:0,name: 'พนักงาน'
-            },
-            {
-                value:1,name: 'ผู้ดูแลระบบ'
-            }
-            ]"
-            item-text="name"
-            item-value="value"
-            label="ประเภทผู้ใช้"
-            v-model="newUser.userType"
-            :rules="[v => v!=null || 'กรุณาเลือกประเภทผู้ใช้']"
-            required
-        ></v-select>
         </v-flex>
     </v-layout>
     </v-container>
@@ -107,7 +87,7 @@
 
 <v-data-table
             :headers="headers"
-            :items="user"
+            :items="products"
             hide-actions
             class="elevation-1"
     >
@@ -189,36 +169,37 @@ headers: [
 { text: "เบอร์โทร", value: "phoneNumber" },
 { text: "การจัดการ", value: "name", sortable: false }
 ],
-newUser: [
+newProduct: [
 {
-    username: '',
-    password: '',
-    userType:0,
-    firstName: '',
-    lastName: '',
-    email:'',
-    phoneNumber:'',
-    address:''
+    productName: '',
+    productBarcodeID: '',
+    productCapitalPrice:0,
+    productSalePrice:0,
+    productMinimum:0,
+    productQty:0,
+
 }
 ],
-user: []
+companies: [],
+categories:[],
+products:[]
 };
 },
 computed: {
 ...mapState(["serverPath", "authKey"]),
     formTitle () {
-        return this.editedIndex === -1 ? 'เพิ่มบัญชีใหม่' : 'แก้ไขบัญชี'
+        return this.editedIndex === -1 ? 'เพิ่มสินค้าใหม่' : 'แก้ไขสินค้า'
     }
 
 },
 methods: {
-getAllUsers() {
+getAllProducts() {
 axios
-.get(this.serverPath + "users?authKey=" + this.authKey)
+.get(this.serverPath + "products?authKey=" + this.authKey)
 .then(response => {
-    this.user = response.data;
-    console.log(this.serverPath + "users?authKey=" + this.authKey);
-    console.log(this.user);
+    this.products = response.data;
+    console.log(this.serverPath + "products?authKey=" + this.authKey);
+    console.log(this.products);
 })
 .catch(error => {
     console.log(error);
@@ -307,10 +288,23 @@ deleteItem(item){
     axios.delete(this.serverPath+'delete/user/'+item.id+'?authKey='+this.authKey).then(response=>{
         this.getAllUsers();
     })
+},
+getAllCategories(){
+    axios.get(this.serverPath+'categories?authKey=' + this.authKey).then(response=>{
+        this.categories = response.data
+        console.log(this.categories)
+    })
+},
+getAllCompanies(){
+    axios.get(this.serverPath+'companies?authKey=' + this.authKey).then(response=>{
+        this.companies = response.data
+        console.log(this.companies)
+    })
 }
 },
 beforeMount() {
-    this.getAllUsers();
+    this.getAllCategories()
+    this.getAllCompanies()
 }
 };
 </script>
