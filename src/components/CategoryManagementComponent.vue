@@ -46,6 +46,25 @@
 
 <!-- end add user dialog -->
 
+<!-- alert box when category still have product using -->
+<template>
+  <v-layout row justify-center>
+    <v-dialog v-model="alertDialog" persistent max-width="350">
+      <v-card>
+        <v-card-title class="headline">เกิดข้อผิดพลาด</v-card-title>
+        <v-card-text>{{ errMsg }}</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click.native="alertDialog = false,errMsg = ''">ตกลง</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
+</template>
+
+<!-- end -->
+
+
 <v-data-table
             :headers="headers"
             :items="categories"
@@ -98,6 +117,7 @@ return {
 errMsg:'',
 editedIndex:-1,
 valid: true,
+alertDialog: false,
 dialog: false,
 headers: [
 {
@@ -195,6 +215,10 @@ async cfmDelete(item){
 },
 deleteItem(item){
     axios.delete(this.serverPath+'delete/category/'+item.id+'?authKey='+this.authKey).then(response=>{
+       if(response.data.message=='This category still have products.'){
+            this.errMsg = 'ยังมีสินค้าที่อยู่ในประเภทสินค้านี้อยู่ ไม่สามารถลบประเภทสินค้าได้ กรุณาลบสินค้าที่อยู่ในประเภทสินค้านี้ก่อน'
+            this.alertDialog = true
+        }
         this.getAllCategories();
     }).catch(error=>{
         console.log(error)

@@ -66,9 +66,38 @@
         :rules="[v => !!v || 'กรุณากรอกจำนวนสินค้า']"
         ></v-text-field>
         </v-flex>
+        <v-flex xs12>
+            <v-select
+            :items="categories"
+            item-text="categoryName"
+            item-value="id"
+            label="ประเภทสินค้า"
+            :rules="[v => v!=null || 'กรุณาเลือกประเภทสินค้า']"
+            persistent-hint
+            return-object
+            single-line
+            v-model="newProduct.category"
+            ></v-select>
+      </v-flex>
+        <v-flex xs12>
+            <v-select
+            :items="companies"
+            item-text="companyName"
+            item-value="id"
+            label="บริษัทนำเข้า"
+            :rules="[v => v!=null || 'กรุณาเลือกบริษัทนำเข้า']"
+            persistent-hint
+            return-object
+            single-line
+            v-model="newProduct.company"
+            ></v-select>
+      </v-flex>
     </v-layout>
     </v-container>
     <span>*กรุณากรอกข้อมูลให้ครบ</span>
+    <br/>
+    <!-- <span>{{ newProduct.category }}</span>
+    <span>{{ newProduct.company }}</span> -->
     <br/>
     <span style="color:red" v-if="errMsg!=''">{{this.errMsg}}</span>
 </v-card-text>
@@ -93,11 +122,11 @@
     >
     <template slot="items" slot-scope="props">
         <td >{{ props.item.id }}</td>
-        <td class="text-xs-left">{{ props.item.username }}</td>
-        <td class="text-xs-left">{{ props.item.firstName }}</td>
-        <td class="text-xs-left">{{ props.item.lastName }}</td>
-        <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left">{{ props.item.phoneNumber }}</td>
+        <td class="text-xs-left">{{ props.item.productName }}</td>
+        <td class="text-xs-left">{{ props.item.productCapitalPrice }}</td>
+        <td class="text-xs-left">{{ props.item.productSalePrice }}</td>
+        <td class="text-xs-left">{{ props.item.productMinimum }}</td>
+        <td class="text-xs-left">{{ props.item.productQty }}</td>
         <td >
     <v-icon
         medium
@@ -157,16 +186,16 @@ valid: true,
 dialog: false,
 headers: [
 {
-    text: "หมายเลขบัญชี",
+    text: "หมายเลขสินค้า",
     align: "left",
     sortable: false,
     value: "id"
 },
-{ text: "ชื่อบัญชี", value: "username" },
-{ text: "ชื่อ", value: "firstName" },
-{ text: "นามสกุล", value: "lastName" },
-{ text: "อีเมล์", value: "email" },
-{ text: "เบอร์โทร", value: "phoneNumber" },
+{ text: "ชื่อสินค้า", value: "username" },
+{ text: "ราคาทุน", value: "firstName" },
+{ text: "ราคาขาย", value: "lastName" },
+{ text: "จำนวนสินค้าขั้นต่ำ", value: "email" },
+{ text: "จำนวนสินค้าคงเหลือ", value: "phoneNumber" },
 { text: "การจัดการ", value: "name", sortable: false }
 ],
 newProduct: [
@@ -177,7 +206,8 @@ newProduct: [
     productSalePrice:0,
     productMinimum:0,
     productQty:0,
-
+    company:{},
+    category:{}
 }
 ],
 companies: [],
@@ -209,50 +239,47 @@ save() {
 if (this.$refs.form.validate()) {
     // editedIndex คือตำแหน่งที่เลือก item index ตอนนี้ใช้ตรวจสอบว่า ถ้า -1 คือสร้างข้อมูลใหม่ แต่ถ้าไม่ใช่คือการแก้ไข
     if(this.editedIndex==-1){
-        axios.post(this.serverPath+'create/user?authKey='+this.authKey,{
-            username: this.newUser.username,
-            password: this.newUser.password,
-            userType: this.newUser.userType,
-            firstName: this.newUser.firstName,
-            lastName: this.newUser.lastName,
-            email: this.newUser.email,
-            phoneNumber: this.newUser.phoneNumber,
-            address: this.newUser.address
+        axios.post(this.serverPath+'create/product?authKey='+this.authKey,{
+            productName: this.newProduct.productName,
+            productBarcodeID: this.newProduct.productBarcodeID,
+            productCapitalPrice: this.newProduct.productCapitalPrice,
+            productSalePrice: this.newProduct.productSalePrice,
+            productMinimum: this.newProduct.productMinimum,
+            productQty: this.newProduct.productQty,
+            company: this.newProduct.company,
+            category: this.newProduct.category
         }).then(response =>{
-            if(response.data.message=='Please change username.'){
-                this.errMsg = 'บัญชีนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบัญชี'
-            }else if(response.data.message=='Please change email.'){
-                this.errMsg = 'มีบัญชีที่ใช้อีเมลนี้อยู่ กรุณาเปลี่ยนอีเมล'
+            if(response.data.message=='Please change product name.'){
+                this.errMsg = 'สินค้านี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อสินค้า'
             }else{
                 this.resetForm()
-                this.getAllUsers()
+                this.getAllProducts()
             }
         }).catch(error=>{
             console.log(error)
         })
     }else{
-        axios.post(this.serverPath+'update/user?authKey='+this.authKey,{
-            id : this.user[this.editedIndex].id,
-            username: this.newUser.username,
-            password: this.newUser.password,
-            userType: this.newUser.userType,
-            firstName: this.newUser.firstName,
-            lastName: this.newUser.lastName,
-            email: this.newUser.email,
-            phoneNumber: this.newUser.phoneNumber,
-            address: this.newUser.address,
-            authKey:this.user[this.editedIndex].authKey
+        axios.post(this.serverPath+'update/product?authKey='+this.authKey,{
+            id : this.products[this.editedIndex].id,
+            productName: this.newProduct.productName,
+            productBarcodeID: this.newProduct.productBarcodeID,
+            productCapitalPrice: this.newProduct.productCapitalPrice,
+            productSalePrice: this.newProduct.productSalePrice,
+            productMinimum: this.newProduct.productMinimum,
+            productQty: this.newProduct.productQty,
+            company: this.newProduct.company,
+            category: this.newProduct.category
         }).then(response =>{
-            if(response.data.message=='no user detail.'){
-                this.errMsg = 'ไม่พบข้อมูลของผู้ใช้'
+            if(response.data.message=='no product detail.'){
+                this.errMsg = 'ไม่พบข้อมูลของสินค้า'
             }else{
-                if(response.data.message=='Please change username.'){
-                    this.errMsg = 'บัญชีนี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อบัญชี'
-                }else if(response.data.message=='Please change email.'){
-                    this.errMsg = 'มีบัญชีที่ใช้อีเมลนี้อยู่ กรุณาเปลี่ยนอีเมล'
+                if(response.data.message=='Please change product name.'){
+                    this.errMsg = 'ชื่อสินค้านี้มีอยู่แล้วในระบบ กรุณาเปลี่ยนชื่อสินค้า'
+                }else if(response.data.message=='Please change product barcode.'){
+                    this.errMsg = 'มีสินค้าที่ใช้รหัสบาร์โค้ดนี้อยู่ กรุณาเปลี่ยนรหัสบาร์โค้ด'
                 }else{
                     this.resetForm()
-                    this.getAllUsers()
+                    this.getAllProducts()
                 }
             }
         }).catch(error=>{
@@ -270,23 +297,26 @@ resetForm(){
     this.editedIndex = -1
 },
 editItem(item) {
-        this.editedIndex = this.user.indexOf(item)
-        this.newUser = Object.assign({}, item)
-        this.reEnterPasswordRules = Object.assign([],this.disableReTypeRules)
-        this.reTypePasswordDisable = true
-        this.passwordDisable = true
+        this.editedIndex = this.products.indexOf(item)
+        this.newProduct = Object.assign({}, item)
         this.dialog = true
 },
 async cfmDelete(item){
-    let username = this.user[this.user.indexOf(item)].username
-    let res = await this.$confirm('คุณต้องการลบบัญชี '+ username + '?', {title: 'คำเตือน'})
+    let productName = this.products[this.products.indexOf(item)].productName
+    let res = await this.$confirm('คุณต้องการสินค้า '+ productName + '?', {title: 'คำเตือน'})
     if(res){
-        this.deleteItem(this.user[this.user.indexOf(item)])
+        this.deleteItem(this.products[this.products.indexOf(item)])
     }
 },
 deleteItem(item){
-    axios.delete(this.serverPath+'delete/user/'+item.id+'?authKey='+this.authKey).then(response=>{
-        this.getAllUsers();
+    axios.delete(this.serverPath+'delete/product/'+item.id+'?authKey='+this.authKey).then(response=>{
+        this.getAllProducts();
+    })
+},
+getAllProducts(){
+    axios.get(this.serverPath+'products?authKey=' + this.authKey).then(response=>{
+        this.products = response.data
+        console.log(this.products)
     })
 },
 getAllCategories(){
@@ -303,6 +333,7 @@ getAllCompanies(){
 }
 },
 beforeMount() {
+    this.getAllProducts()
     this.getAllCategories()
     this.getAllCompanies()
 }
